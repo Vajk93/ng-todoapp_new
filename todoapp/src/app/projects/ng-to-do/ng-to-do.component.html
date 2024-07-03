@@ -1,0 +1,49 @@
+<img src="../../../assets/todo-app-main/images/bg-desktop-light.jpg" alt="" class="h-auto w-full fixed top-0 left-0 right-0 -z-10">
+
+<section class="w-[600px] mx-auto mt-20 my_shadow">
+	<!-- title: -->
+	<div class="flex justify-between">
+		<h1 class="text-white mb-7 text-4xl font-semibold">T O D O</h1>
+		<div class="pt-1">
+			<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"><path fill="#FFF" fill-rule="evenodd" d="M13 0c.81 0 1.603.074 2.373.216C10.593 1.199 7 5.43 7 10.5 7 16.299 11.701 21 17.5 21c2.996 0 5.7-1.255 7.613-3.268C23.22 22.572 18.51 26 13 26 5.82 26 0 20.18 0 13S5.82 0 13 0z"/></svg>
+		</div>
+	</div>
+
+	<!-- prompt: -->
+	<div class="flex h-[60px] rounded-md bg-white w-full overflow-hidden">
+		<div class="flex justify-center items-center bg-blue-300 px-5">
+			<div class="rounded-full border-my-bright-blue h-7 w-7 bg-red-400"></div>
+		</div>
+		<input [(ngModel)]="inputValue" (keydown.enter)="addToDo($event)" type="text" class="flex-1 outline-none text-[18px]" placeholder="Create ToDo">
+	</div>
+
+	<!-- item container: -->
+	<div class="mt-5 rounded-t-md bg-my-light-grayish-blue flex flex-col gap-[1px] max-h-[400px] overflow-hidden overflow-y-scroll hide_scrollbar">
+		<!-- item: -->
+		<div *ngFor="let it of toDos; let i = index" 
+			(mouseenter)="selectToDo(it.id)" 
+			class="flex min-h-[60px] bg-white w-full">
+		<div class="flex justify-center items-center px-5">
+		<div [ngClass]="selectedToDoId === i + 1 ? 'bg-red-400' : 'bg-blue-400'" class="rounded-full border-my-bright-blue h-7 w-7 cursor-pointer"></div>
+			</div>
+			<div class="flex items-center flex-1">
+				<p class="text-[18px] text-my-black-text">{{it.title}}</p>
+			</div>
+			<div (click)="deleteToDo(i)" *ngIf="selectedToDoId == it.id" class="flex justify-center items-center bg-white px-5 text-my-black-text cursor-pointer">
+				<!-- delete svg: -->
+				<svg class="size-8 " stroke-width="0.7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"  stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+			</div>
+		</div>
+	</div>
+
+	<!-- bottom navigation: -->
+	<div class="flex justify-between items-center h-[50px] px-5">
+		<p class="cursor-pointer">5 items left</p>
+		<div class="flex gap-5">
+			<button class="cursor-pointer">All</button>
+			<button class="cursor-pointer">Active</button>
+			<button class="cursor-pointer">Completed</button>
+		</div>
+		<p class="cursor-pointer">Clear Completed</p>
+	</div>
+</section>
