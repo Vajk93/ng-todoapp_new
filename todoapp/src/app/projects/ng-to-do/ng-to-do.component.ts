@@ -38,6 +38,15 @@ export class NgToDoComponent {
 		this.toDos.splice(index, 1);
 	}
 
+	protected changeStatus(task: IToDo){
+		this.toDos.forEach((toDo:IToDo)=>{
+			if(task === toDo){
+				toDo.completed = !toDo.completed
+			}
+		})
+		console.log(this.toDos);
+	}
+
 	protected generateNewId(items: IToDo[]): number {
 		if (items.length === 0) {
 		  return 1; // Ha a tömb üres, kezdjük az id-t 1-gyel

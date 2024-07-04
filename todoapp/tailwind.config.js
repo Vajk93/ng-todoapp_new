@@ -8,7 +8,6 @@ module.exports = {
       colors: {
         'my-black-text': '#292929',
         'my-bright-blue': 'hsl(220, 98%, 61%)',
-        'my-check-bg': 'linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%))',
         'my-very-light-gray': 'hsl(0, 0%, 98%)',
         'my-very-light-grayish-blue': 'hsl(236, 33%, 92%)',
         'my-light-grayish-blue': 'hsl(233, 11%, 84%)',
@@ -22,6 +21,10 @@ module.exports = {
         'my-dark-very-dark-grayish-blue': 'hsl(233, 14%, 35%)',
         'my-dark-very-dark-grayish-blue-2': 'hsl(237, 14%, 26%)',
       },
+      // for linear, gradientColorStops, we need backgroundImage:
+      backgroundImage: {
+        'my-linear-bg': 'linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%))',
+      }
     },
   },
   plugins: [],

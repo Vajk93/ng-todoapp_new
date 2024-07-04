@@ -24,7 +24,11 @@
 			(mouseenter)="selectToDo(it.id)" 
 			class="flex min-h-[60px] bg-white w-full">
 		<div class="flex justify-center items-center px-5">
-		<div [ngClass]="selectedToDoId === i + 1 ? 'bg-red-400' : 'bg-blue-400'" class="rounded-full border-my-bright-blue h-7 w-7 cursor-pointer"></div>
+		<div (click)="changeStatus(it)" [ngClass]="selectedToDoId === i + 1 ? 'bg-re' : 'bg-bl'" 
+			class="relative bg-my-linear-bg rounded-full border-my-bright-blue h-7 w-7 cursor-pointer flex justify-center items-center">
+			<div *ngIf="!it.completed" class="absolute top-[2px] left-[2px] right-[2px] bottom-[2px] rounded-full bg-white"></div>
+			<svg xmlns="http://www.w3.org/2000/svg" width="11" height="9"><path fill="none" stroke="#FFF" stroke-width="2" d="M1 4.304L3.696 7l6-6"/></svg>
+		</div>
 			</div>
 			<div class="flex items-center flex-1">
 				<p class="text-[18px] text-my-black-text">{{it.title}}</p>
