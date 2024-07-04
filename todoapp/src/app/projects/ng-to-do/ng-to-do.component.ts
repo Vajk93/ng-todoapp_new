@@ -1,17 +1,19 @@
-import { Component } from '@angular/core';
-
-interface IToDo {
-	id: number,
-	title: string,
-	completed: boolean
-}
+import { Component, OnInit } from '@angular/core';
+import { IToDo } from 'src/app/interfaces/globals';
+import { IndexDbService } from 'src/app/services/index-db.service';
 
 @Component({
   selector: 'app-ng-to-do',
   templateUrl: './ng-to-do.component.html',
   styleUrls: ['./ng-to-do.component.css']
 })
-export class NgToDoComponent {
+export class NgToDoComponent implements OnInit {
+
+	constructor(private indexDBService: IndexDbService){}
+
+	ngOnInit(): void {
+		this.getTodos()
+	}
 
 	// ?select todo with hover effect:
 	protected selectToDo(id:number){
@@ -19,32 +21,39 @@ export class NgToDoComponent {
 		this.selectedToDoId = id;
 	}
 
-	protected addToDo($event:any){
-		this.inputValue = $event?.target.value;
-		if(this.inputValue !== ""){
-			const _toDo: IToDo = {
-				id: this.generateNewId(this.toDos),
-				title: this.inputValue,
-				completed: false
-			}
-			this.toDos.push(_toDo);
-			this.inputValue = "";
+	protected addToDo(){
+		const _todo: IToDo = {
+			id: this.generateNewId(this.toDos), 
+			name: this.inputValue, 
+			completed: false
 		}
-
-	}
-
-	protected deleteToDo(index:number){
-		this.selectedToDoId = index;
-		this.toDos.splice(index, 1);
-	}
-
-	protected changeStatus(task: IToDo){
-		this.toDos.forEach((toDo:IToDo)=>{
-			if(task === toDo){
-				toDo.completed = !toDo.completed
-			}
+		this.indexDBService.addTodo(_todo).subscribe((key:any)=>{
+			console.log('to do added, key: ', key);
+			this.inputValue = '';
+			this.getTodos();
 		})
-		console.log(this.toDos);
+	}
+
+	protected getTodos(){
+		this.indexDBService.getAllTodos().subscribe((todos:IToDo[]) => {
+			this.toDos = todos;
+			console.log('all todos: ', todos);
+		})
+	}
+
+	protected deleteToDo(id:number){
+		this.indexDBService.deleteTodoById(id).subscribe(()=>{
+			console.log('Todo deleted');
+			this.getTodos();
+		})
+	}
+
+	protected toggleTodoCompletion(todo:IToDo){
+		todo.completed = !todo.completed;
+		this.indexDBService.updateTodo(todo).subscribe(()=>{
+			console.log('todo updateed');
+			// this.getTodos();
+		})
 	}
 
 	protected generateNewId(items: IToDo[]): number {
@@ -57,14 +66,7 @@ export class NgToDoComponent {
 		return maxId + 1;
 	}
 
-	// protected toDos: IToDo[] = [];
-	// with dummy datas:
-	protected toDos: IToDo[] = [
-		{id:1, title: 'Almaszedés', completed: false},
-		{id:2, title: 'Edzés', completed: true},
-		{id:3, title: 'Pihenés', completed: false},
-	];
-
+	protected toDos: IToDo[] = [];
 	protected selectedToDoId:number | null = null;
 	protected inputValue:string = "";
 }
