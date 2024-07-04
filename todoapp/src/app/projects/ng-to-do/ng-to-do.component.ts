@@ -22,48 +22,27 @@ export class NgToDoComponent implements OnInit {
 	}
 
 	protected addToDo(){
-		const _todo: IToDo = {
-			id: this.generateNewId(this.toDos), 
+		const _todo: any = { 
 			name: this.inputValue, 
 			completed: false
 		}
 		this.indexDBService.addTodo(_todo).subscribe((key:any)=>{
-			console.log('to do added, key: ', key);
 			this.inputValue = '';
 			this.getTodos();
 		})
 	}
 
 	protected getTodos(){
-		this.indexDBService.getAllTodos().subscribe((todos:IToDo[]) => {
-			this.toDos = todos;
-			console.log('all todos: ', todos);
-		})
+		this.indexDBService.getAllTodos().subscribe((todos:IToDo[]) => this.toDos = todos)
 	}
 
 	protected deleteToDo(id:number){
-		this.indexDBService.deleteTodoById(id).subscribe(()=>{
-			console.log('Todo deleted');
-			this.getTodos();
-		})
+		this.indexDBService.deleteTodoById(id).subscribe(()=>this.getTodos())
 	}
 
 	protected toggleTodoCompletion(todo:IToDo){
 		todo.completed = !todo.completed;
-		this.indexDBService.updateTodo(todo).subscribe(()=>{
-			console.log('todo updateed');
-			// this.getTodos();
-		})
-	}
-
-	protected generateNewId(items: IToDo[]): number {
-		if (items.length === 0) {
-		  return 1; // Ha a tömb üres, kezdjük az id-t 1-gyel
-		}
-	  
-		const maxId = items.reduce((max, item) => Math.max(max, item.id), 0);
-		
-		return maxId + 1;
+		this.indexDBService.updateTodo(todo).subscribe()
 	}
 
 	protected toDos: IToDo[] = [];
