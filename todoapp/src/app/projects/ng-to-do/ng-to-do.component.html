@@ -23,7 +23,8 @@
 	<div *ngIf="toDos[0]" class="mt-7 rounded-t-md bg-slate-200 my_shadow flex flex-col gap-[1px] max-h-[400px] overflow-hidden overflow-y-scroll hide_scrollbar">
 		<!-- item: -->
 		<div *ngFor="let it of toDos; let i = index" 
-			(mouseenter)="selectToDo(it.id)" 
+			(mouseenter)="selectToDo(it.id)"
+			(mouseleave)="removeSelectedToDo()" 
 			class="flex min-h-[60px] bg-white w-full">
 			<div class="flex justify-center items-center px-5">
 				<div (click)="toggleTodoCompletion(it)" 

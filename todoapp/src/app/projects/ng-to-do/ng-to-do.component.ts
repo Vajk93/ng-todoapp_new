@@ -17,8 +17,11 @@ export class NgToDoComponent implements OnInit {
 
 	// ?select todo with hover effect:
 	protected selectToDo(id:number){
-		console.log(id);
 		this.selectedToDoId = id;
+	}
+
+	protected removeSelectedToDo(){
+		this.selectedToDoId = null;
 	}
 
 	protected addToDo(){
