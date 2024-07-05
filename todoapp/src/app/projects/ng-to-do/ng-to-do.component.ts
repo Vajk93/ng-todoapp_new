@@ -12,9 +12,19 @@ export class NgToDoComponent implements OnInit {
 	constructor(private indexDBService: IndexDbService){}
 
 	ngOnInit(): void {
-		this.getTodos()
+		this.getTodos();
+		this.initTheme();
 	}
 
+	protected initTheme(){
+		let _theme = localStorage.getItem('to_do_app_theme');
+		if(_theme){
+			this.theme = _theme;
+		} else {
+			localStorage.setItem('to_do_app_theme', 'dark');
+		}
+		this.applyTheme();
+	}
 	// ?select todo with hover effect:
 	protected selectToDo(id:number){
 		this.selectedToDoId = id;
@@ -25,14 +35,16 @@ export class NgToDoComponent implements OnInit {
 	}
 
 	protected addToDo(){
-		const _todo: any = { 
-			name: this.inputValue, 
-			completed: false
+		if(this.inputValue !== ""){
+			const _todo: any = { 
+				name: this.inputValue, 
+				completed: false
+			}
+			this.indexDBService.addTodo(_todo).subscribe((key:any)=>{
+				this.inputValue = '';
+				this.getTodos();
+			})
 		}
-		this.indexDBService.addTodo(_todo).subscribe((key:any)=>{
-			this.inputValue = '';
-			this.getTodos();
-		})
 	}
 
 	protected getTodos(){
@@ -48,7 +60,23 @@ export class NgToDoComponent implements OnInit {
 		this.indexDBService.updateTodo(todo).subscribe()
 	}
 
+	protected changeTheme(){
+		this.theme = this.theme === 'light' ? 'dark' : 'light';
+		localStorage.setItem('to_do_app_theme', this.theme);
+		this.applyTheme();
+	}
+
+	private applyTheme() {
+		const htmlElement = document.documentElement;
+		if (this.theme === 'dark') {
+		  htmlElement.classList.add('dark');
+		} else {
+		  htmlElement.classList.remove('dark');
+		}
+	  }
+
 	protected toDos: IToDo[] = [];
 	protected selectedToDoId:number | null = null;
 	protected inputValue:string = "";
+	protected theme:string = 'dark';
 }

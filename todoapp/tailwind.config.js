@@ -3,6 +3,7 @@ module.exports = {
   content: [
     "./src/**/*.{html,ts}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -24,7 +25,7 @@ module.exports = {
       // for linear, gradientColorStops, we need backgroundImage:
       backgroundImage: {
         'my-linear-bg': 'linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%))',
-      }
+      },
     },
   },
   plugins: [],
