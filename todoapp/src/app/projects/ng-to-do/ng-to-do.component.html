@@ -38,7 +38,7 @@
 				</div>
 			</div>
 			<div class="flex items-center flex-1">
-				<p class="text-[18px] text-my-black-text">{{it.name}}</p>
+				<p class="text-[18px]" [ngClass]="it.completed ? 'opacity-30 line-through' : 'text-my-black-text'">{{it.name}}</p>
 			</div>
 			<div (click)="deleteToDo(it.id)" *ngIf="selectedToDoId == it.id" class="flex justify-center items-center bg-white px-5 text-my-black-text cursor-pointer">
 				<!-- delete svg: -->

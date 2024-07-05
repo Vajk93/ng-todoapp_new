@@ -16,7 +16,3 @@ section {
 .hide_scrollbar::-webkit-scrollbar { 
 	display: none; /* Chrome, Safari és Opera */
 }
-
-.linear-bg {
-    background-color: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%)) !important;
-}
