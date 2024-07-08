@@ -66,20 +66,23 @@
 			</div>
 		</div>
 
+		<!-- space between prompt and bottom navigation if no todo: -->
+		<div *ngIf="!toDos[0]" class="w-full h-7"></div>
+		
 		<!-- bottom navigation: -->
 		<div class="rounded-b-md text-my-black-text dark:text-my-dark-light-grayish-blue" [ngClass]="theme === 'light' ? 'my_shadow' : 'my_shadow_dark_mode'">
-			<div *ngIf="toDos[0]" class="flex justify-between items-center bg-white dark:bg-my-dark-very-dark-desaturated-blue h-[50px] px-5  border-t-[1px] border-slate-200 dark:border-slate-700 md:rounded-b-md">
-				<p class="hidden md:block  cursor-pointer">5 items left</p>
+			<div class="flex justify-between items-center bg-white dark:bg-my-dark-very-dark-desaturated-blue h-[50px] px-5  border-t-[1px] border-slate-200 dark:border-slate-700 md:rounded-b-md">
+				<p class="hidden md:block cursor-default">{{!isCompletedClicked ? itemLeft + ' items left': itemCompleted + ' items completed'}}</p>
 				<div class="flex gap-7 mx-auto">
-					<button class="cursor-pointer">All</button>
-					<button class="cursor-pointer">Active</button>
-					<button class="cursor-pointer">Completed</button>
+					<button (click)="getTodos()" class="cursor-pointer">All</button>
+					<button (click)="showNotCompleted()" class="cursor-pointer">Active</button>
+					<button (click)="showCompleted()" class="cursor-pointer">Completed</button>
 				</div>
-				<p class="hidden md:block cursor-pointer">Clear Completed</p>
+				<p (click)="deleteCompleted()" class="hidden md:block cursor-pointer">Clear Completed</p>
 			</div>
 			<div class="md:hidden h-[50px] flex justify-between items-center bg-white dark:bg-my-dark-very-dark-desaturated-blue px-5 border-t-[1px] border-slate-200 rounded-b-md">
-				<p class="cursor-pointer md:hidden">5 items left</p>
-				<p class="cursor-pointer md:hidden">Clear Completed</p>
+				<p class="md:hidden cursor-default">{{!isCompletedClicked ? itemLeft + ' items left': itemCompleted + ' items completed'}}</p>
+				<p (click)="deleteCompleted()" class="cursor-pointer md:hidden">Clear Completed</p>
 			</div>
 		</div>
 
