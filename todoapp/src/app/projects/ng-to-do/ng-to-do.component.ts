@@ -70,13 +70,6 @@ export class NgToDoComponent implements OnInit, DoCheck {
 		this.applyTheme();
 	}
 
-	private applyTheme() {
-		const htmlElement = document.documentElement;
-		this.theme === 'dark' ?
-			htmlElement.classList.add('dark') :
-			htmlElement.classList.remove('dark');
-	}
-
 	// button functions on the bottom:
 	protected showCompleted(){
 		this.isCompletedClicked = true;
@@ -101,6 +94,13 @@ export class NgToDoComponent implements OnInit, DoCheck {
 			this.toDos = todos;
 			this.toDos.forEach((todo:IToDo)=> todo.completed ? this.deleteToDo(todo.id) : '')
 		});
+	}
+
+	private applyTheme() {
+		const htmlElement = document.documentElement;
+		this.theme === 'dark' ?
+			htmlElement.classList.add('dark') :
+			htmlElement.classList.remove('dark');
 	}
 
 	private calcLeftItemsNumber() {
